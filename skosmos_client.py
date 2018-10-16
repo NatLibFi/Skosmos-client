@@ -24,7 +24,9 @@ class SkosmosClient:
         req.raise_for_status()
         return req.json()['vocabularies']
 
-    def search(self, query, lang=None, labellang=None, vocabs=None, type=None, parent=None, group=None, maxhits=100, offset=0, fields=None, unique=False):
+    def search(self, query, lang=None, labellang=None, vocabs=None,
+               type_=None, parent=None, group=None, maxhits=100, offset=0,
+               fields=None, unique=False):
         """Search for concepts either within specified vocabularies or
         globally in all vocabularies."""
 
@@ -42,8 +44,8 @@ class SkosmosClient:
                 payload['vocab'] = vocabs
             else:  # a sequence such as a list?
                 payload['vocab'] = ' '.join(vocabs)
-        if type is not None:
-            payload['type'] = type
+        if type_ is not None:
+            payload['type'] = type_
         if parent is not None:
             payload['parent'] = parent
         if group is not None:
