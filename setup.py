@@ -8,11 +8,21 @@ def read(fname):
 
 setup(
     name='skosmos_client',
-    version='0.1',
+    version='0.1.0',
     url='https://github.com/NatLibFi/Skosmos-client',
     author='Osma Suominen',
     author_email='osma.suominen@helsinki.fi',
     description='Python client library for accessing Skosmos REST API',
     long_description=read('README.md'),
+    long_description_content_type='text/markdown',
     py_modules=['skosmos_client'],
-    install_requires=['requests','rdflib'])
+    install_requires=['requests','rdflib'],
+        extras_require={
+        'dev': ['bumpversion']
+    },
+    classifiers=[
+        "Programming Language :: Python :: 3",
+        "License :: OSI Approved :: Apache Software License",
+        "Operating System :: OS Independent",
+    ]
+)
