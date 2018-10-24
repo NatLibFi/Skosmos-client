@@ -6,30 +6,25 @@ API](http://api.finto.fi). The API can be used to get information about
 vocabularies, look up and search for concepts and to retrieve information
 about individual concepts.
 
+## Installation
+
+The easiest way to install is via pip:
+
+    pip3 install skosmos-client
+
 ## Dependencies
 
 The library depends on the
 [requests](http://docs.python-requests.org/en/master/#) module which is used
-for HTTP/REST access and the [rdflib](https://pypi.org/project/rdflib/)
-module which is used to handle parsing of RDF data. The easiest way to
-install these dependencies is via pip:
-
-    pip install requests rdflib
-
-or in some cases (e.g. Ubuntu systems with both Python 2 and 3):
-
-    pip3 install requests rdflib
+for HTTP/REST access. If you install this via pip, the dependencies will be
+handled automatically.
 
 ## How to use
 
 The client library comes with examples demonstrating its usage. You can invoke
 the example simply by running the [skosmos_client.py](skosmos_client.py) script.
 
-You can install the skosmos_client module globally like this:
-
-    python3 setup.py install
-
-In your own code, you can then import the SkosmosClient class like this:
+In your own code, you can use the SkosmosClient class like this:
 
     from skosmos_client import SkosmosClient
 
