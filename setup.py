@@ -7,7 +7,7 @@ def read(fname):
 
 
 setup(
-    name='skosmos_client',
+    name='skosmos-client',
     version='0.1.1',
     url='https://github.com/NatLibFi/Skosmos-client',
     author='Osma Suominen',
@@ -17,7 +17,7 @@ setup(
     long_description_content_type='text/markdown',
     py_modules=['skosmos_client'],
     install_requires=['requests','rdflib'],
-        extras_require={
+    extras_require={
         'dev': ['bumpversion']
     },
     classifiers=[
