@@ -26,6 +26,53 @@ class SkosmosConcept:
         req.raise_for_status()
         data = req.json()
         return data['prefLabel']
+    
+    def broader(self, lang=None):
+        payload = {'uri': self.uri}
+        if lang is not None:
+            payload['lang'] = lang
+        req = requests.get(self.api_base + self.vocid + '/broader', params=payload)
+        req.raise_for_status()
+        data = req.json()
+        return data['broader']
+    
+    def broaderTransitive(self, lang=None):
+        payload = {'uri': self.uri}
+        if lang is not None:
+            payload['lang'] = lang
+        req = requests.get(self.api_base + self.vocid + '/broaderTransitive', params=payload)
+        req.raise_for_status()
+        data = req.json()
+        return data['broaderTransitive']
+    
+    def narrower(self, lang=None):
+        payload = {'uri': self.uri}
+        if lang is not None:
+            payload['lang'] = lang
+        req = requests.get(self.api_base + self.vocid + '/narrower', params=payload)
+        req.raise_for_status()
+        data = req.json()
+        return data['narrower']
+
+    def narrowerTransitive(self, lang=None):
+        payload = {'uri': self.uri}
+        if lang is not None:
+            payload['lang'] = lang
+        req = requests.get(self.api_base + self.vocid + '/narrowerTransitive', params=payload)
+        req.raise_for_status()
+        data = req.json()
+        return data['narrowerTransitive']
+
+    def related(self, lang=None):
+        payload = {'uri': self.uri}
+        if lang is not None:
+            payload['lang'] = lang
+        req = requests.get(self.api_base + self.vocid + '/related', params=payload)
+        req.raise_for_status()
+        data = req.json()
+        return data['related']
+    
+    
 
 
 class SkosmosClient:
@@ -237,8 +284,21 @@ if __name__ == '__main__':
         print(group)
     
     print()
-    print("* Performing operations on a single concept")
+    print("* Performing operations on single concepts")
     prams = skosmos.get_concept('yso', 'http://www.yso.fi/onto/yso/p12345')
-    print("Concept label in the default language:", prams.label())
-    print("Concept label in English:", prams.label('en'))
+    print("YSO concept 'prams' label in the default language:", prams.label())
+    print("YSO concept 'prams' label in English:", prams.label('en'))
+    print("Broader concepts of 'prams' in YSO:")
+    for bc in prams.broader('en'):
+        print(bc)
+    print("Transitive broader concepts of 'prams' in YSO:")
+    for btc in prams.broaderTransitive('en'):
+        print(btc)
 
+    print("Narrower concepts of 'Hanko' in YSO places:")
+    hanko = skosmos.get_concept('yso-paikat', 'http://www.yso.fi/onto/yso/p94126')
+    for nc in hanko.narrower():
+        print(nc)
+    print("Related concepts of 'prams' in YSO:")
+    for rc in prams.related('en'):
+        print(rc)
