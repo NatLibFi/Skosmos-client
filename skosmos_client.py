@@ -9,6 +9,25 @@ from rdflib.namespace import SKOS
 API_BASE = 'http://api.finto.fi/rest/v1/'
 
 
+class SkosmosConcept:
+    """Class for representing and providing operations for a single concept
+    from a Skosmos API."""
+    
+    def __init__(self, api_base, vocid, uri):
+        self.api_base = api_base
+        self.vocid = vocid
+        self.uri = uri
+    
+    def label(self, lang=None):
+        payload = {'uri': self.uri}
+        if lang is not None:
+            payload['lang'] = lang
+        req = requests.get(self.api_base + self.vocid + '/label', params=payload)
+        req.raise_for_status()
+        data = req.json()
+        return data['prefLabel']
+
+
 class SkosmosClient:
     """Client class for accessing Skosmos REST API operations"""
 
@@ -144,6 +163,10 @@ class SkosmosClient:
             raise ValueError(req.text)
         req.raise_for_status()
         return req.json()['groups']
+    
+    def get_concept(self, vocid, uri):
+        """get a Concept for performing concept-specific operations"""
+        return SkosmosConcept(self.api_base, vocid, uri)
 
     def __str__(self):
         """Return a string representation of this object"""
@@ -212,3 +235,10 @@ if __name__ == '__main__':
     print("* Looking up the thematic groups of a vocabulary")
     for group in skosmos.groups('yso', lang='en'):
         print(group)
+    
+    print()
+    print("* Performing operations on a single concept")
+    prams = skosmos.get_concept('yso', 'http://www.yso.fi/onto/yso/p12345')
+    print("Concept label in the default language:", prams.label())
+    print("Concept label in English:", prams.label('en'))
+
