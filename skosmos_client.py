@@ -17,62 +17,41 @@ class SkosmosConcept:
         self.api_base = api_base
         self.vocid = vocid
         self.uri = uri
+
+    def _request(self, route, key, lang=None, limit=None):
+        payload = {'uri': self.uri}
+        if lang is not None:
+            payload['lang'] = lang
+        if limit is not None:
+            try:
+                limit = int(limit)
+                if limit > 0:
+                    payload['limit'] = limit
+            except ValueError:
+                # not an integer - ignore
+                pass
+        req = requests.get(self.api_base + self.vocid + route, params=payload)
+        req.raise_for_status()
+        data = req.json()
+        return data[key]
     
     def label(self, lang=None):
-        payload = {'uri': self.uri}
-        if lang is not None:
-            payload['lang'] = lang
-        req = requests.get(self.api_base + self.vocid + '/label', params=payload)
-        req.raise_for_status()
-        data = req.json()
-        return data['prefLabel']
+        return self._request('/label', 'prefLabel', lang)
     
     def broader(self, lang=None):
-        payload = {'uri': self.uri}
-        if lang is not None:
-            payload['lang'] = lang
-        req = requests.get(self.api_base + self.vocid + '/broader', params=payload)
-        req.raise_for_status()
-        data = req.json()
-        return data['broader']
+        return self._request('/broader', 'broader', lang)
     
-    def broaderTransitive(self, lang=None):
-        payload = {'uri': self.uri}
-        if lang is not None:
-            payload['lang'] = lang
-        req = requests.get(self.api_base + self.vocid + '/broaderTransitive', params=payload)
-        req.raise_for_status()
-        data = req.json()
-        return data['broaderTransitive']
+    def broaderTransitive(self, lang=None, limit=None):
+        return self._request('/broaderTransitive', 'broaderTransitive', lang, limit)
     
     def narrower(self, lang=None):
-        payload = {'uri': self.uri}
-        if lang is not None:
-            payload['lang'] = lang
-        req = requests.get(self.api_base + self.vocid + '/narrower', params=payload)
-        req.raise_for_status()
-        data = req.json()
-        return data['narrower']
+        return self._request('/narrower', 'narrower', lang)
 
-    def narrowerTransitive(self, lang=None):
-        payload = {'uri': self.uri}
-        if lang is not None:
-            payload['lang'] = lang
-        req = requests.get(self.api_base + self.vocid + '/narrowerTransitive', params=payload)
-        req.raise_for_status()
-        data = req.json()
-        return data['narrowerTransitive']
+    def narrowerTransitive(self, lang=None, limit=None):
+        return self._request('/narrowerTransitive', 'narrowerTransitive', lang, limit)
 
     def related(self, lang=None):
-        payload = {'uri': self.uri}
-        if lang is not None:
-            payload['lang'] = lang
-        req = requests.get(self.api_base + self.vocid + '/related', params=payload)
-        req.raise_for_status()
-        data = req.json()
-        return data['related']
-    
-    
+        return self._request('/related', 'related', lang)
 
 
 class SkosmosClient:
