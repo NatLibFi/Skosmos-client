@@ -23,13 +23,7 @@ class SkosmosConcept:
         if lang is not None:
             payload['lang'] = lang
         if limit is not None:
-            try:
-                limit = int(limit)
-                if limit > 0:
-                    payload['limit'] = limit
-            except ValueError:
-                # not an integer - ignore
-                pass
+            payload['limit'] = limit
         req = requests.get(self.api_base + self.vocid + route, params=payload)
         req.raise_for_status()
         data = req.json()
