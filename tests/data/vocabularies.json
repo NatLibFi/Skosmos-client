@@ -1,0 +1,32 @@
+{
+  "@context": {
+    "rdfs": "http://www.w3.org/2000/01/rdf-schema#",
+    "onki": "http://schema.onki.fi/onki#",
+    "title": {
+      "@id": "rdfs:label",
+      "@language": "fi"
+    },
+    "vocabularies": "onki:hasVocabulary",
+    "id": "onki:vocabularyIdentifier",
+    "uri": "@id",
+    "@base": "http://localhost/Skosmos/rest/v1/vocabularies"
+  },
+  "uri": "",
+  "vocabularies": [
+    {
+      "uri": "cn",
+      "id": "cn",
+      "title": "Suomalaiset yhteisönimet"
+    },
+    {
+      "uri": "yso",
+      "id": "yso",
+      "title": "YSO - Yleinen suomalainen ontologia"
+    },
+    {
+      "uri": "yso-paikat",
+      "id": "yso-paikat",
+      "title": "YSO-paikat"
+    }
+  ]
+}
