@@ -8,7 +8,7 @@ def read(fname):
 
 setup(
     name='skosmos-client',
-    version='0.2.1',
+    version='0.2.2',
     url='https://github.com/NatLibFi/Skosmos-client',
     author='Osma Suominen',
     author_email='osma.suominen@helsinki.fi',
