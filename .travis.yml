@@ -1,5 +1,7 @@
 dist: xenial
 language: python
 cache: pip
+install:
+- pip install -e .
 script:
 - pytest
