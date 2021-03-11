@@ -18,7 +18,7 @@ setup(
     py_modules=['skosmos_client'],
     install_requires=['requests','rdflib'],
     extras_require={
-        'dev': ['bumpversion']
+        'dev': ['bumpversion','pytest']
     },
     classifiers=[
         "Programming Language :: Python :: 3",
