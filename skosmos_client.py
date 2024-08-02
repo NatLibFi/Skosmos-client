@@ -98,8 +98,9 @@ class SkosmosClient:
         """Return all information about a particular URI. If a vocabulary ID
         is given, look up the information from that vocabulary; otherwise,
         let Skosmos decide. The data is returned as an rdflib Graph."""
-
-        payload = {'uri': uri, 'format': 'application/rdf+xml'}
+        
+        format = 'text/turtle'
+        payload = {'uri': uri, 'format': format}
 
         if vocid is not None:
             url = self.api_base + vocid + '/data'
@@ -109,7 +110,7 @@ class SkosmosClient:
         req = requests.get(url, params=payload)
         req.raise_for_status()
         graph = rdflib.Graph()
-        graph.parse(data=req.content)
+        graph.parse(data=req.content, format=format)
         return graph
 
     def types(self, lang, vocid=None):
